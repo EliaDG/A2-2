@@ -1,0 +1,17 @@
+library(pacman)
+p_load(
+  haven,
+  dplyr,
+  sf,
+  tmap,
+  data.table,
+  viridis,
+  ggrepel,
+  ggplot2,
+  tidyverse,
+  stargazer,
+  conleyreg,
+  janitor,
+  estimatr,
+  fixest
+)
