@@ -212,8 +212,10 @@ plot_04 <- tm_shape(df) +
             legend.text.size = 1)
 
 #REPLICATION -------------------------------------------------------------------
+##B.2 ---------------
+
 model_1 <- lm(illiteracy ~ distmiss + lati + longi + corr + ita + mis_pry + mis, data = df)
-model_2 <- lm(illiteracy ~ distmiss + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry+ mis, data = df)
+model_2 <- lm(illiteracy ~ distmiss + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df)
 
 df_Brazil <- subset(df, COUNTRY == "Brazil")
 model_3 <- lm(illiteracy ~ distmiss + lati + longi + mesorregi, data = df_Brazil)
@@ -371,10 +373,10 @@ Dist_4 <- ggplot() +
   coord_sf(xlim = c(-59.5, -49.7), ylim = c(-33.5, -25.75))
 
 ## ALTERNATIVE DISTANCE--------------
-model_a <- lm(illiteracy ~ distmiss + lati + longi + corr + ita + mis_pry + mis, data = df_dist)
-model_b <- lm(illiteracy ~ distmiss_log + lati + longi + corr + ita + mis_pry + mis, data = df_dist)
-model_c <- lm(illiteracy ~ distmiss_dec + lati + longi + corr + ita + mis_pry + mis, data = df_dist)
-model_d <- lm(illiteracy ~ distmiss_root + lati + longi + corr + ita + mis_pry + mis, data = df_dist)
+model_a <- lm(illiteracy ~ distmiss + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df_dist)
+model_b <- lm(illiteracy ~ distmiss_log + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df_dist)
+model_c <- lm(illiteracy ~ distmiss_dec + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df_dist)
+model_d <- lm(illiteracy ~ distmiss_root + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df_dist)
 
 ## STARGAZER --------------------------------------------------------------------
 list_1 <- list(model_1, model_2, model_3, model_4, model_5, model_6, model_7, model_8)
@@ -386,7 +388,6 @@ stargazer(list_2, title = "Models with Conley SE", digits = 3, type = "latex")
 stargazer(model_a, model_b, model_c, model_d, title = "Models with different distances", digits = 4, type = "latex")
 
 # SAVING -----------------------------------------------------------------------
-## PNG ---------
 # ggsave("plot_00.png", plot = plot_00, device = "png", path = "./03_Plots/.png")
 # ggsave("plot_01.png", plot = plot_01, device = "png", path = "./03_Plots/.png")
 # ggsave("plot_02.png", plot = plot_02, device = "png", path = "./03_Plots/.png")
@@ -396,17 +397,6 @@ stargazer(model_a, model_b, model_c, model_d, title = "Models with different dis
 # ggsave("Dist_02.png", plot = Dist_2, device = "png", path = "./03_Plots/.png")
 # ggsave("Dist_03.png", plot = Dist_3, device = "png", path = "./03_Plots/.png")
 # ggsave("Dist_04.png", plot = Dist_4, device = "png", path = "./03_Plots/.png")
-# 
-# ## PDF -------------------
-# ggsave("plot_00.pdf", plot = plot_00, device = "pdf", path = "./03_Plots/.pdf")
-# ggsave("plot_01.pdf", plot = plot_01, device = "pdf", path = "./03_Plots/.pdf")
-# ggsave("plot_02.pdf", plot = plot_02, device = "pdf", path = "./03_Plots/.pdf")
-# ggsave("plot_03.pdf", plot = plot_03, device = "pdf", path = "./03_Plots/.pdf")
-# tmap_save(plot_04, filename = "plot_04.pdf")
-# ggsave("Dist_01.pdf", plot = Dist_1, device = "pdf", path = "./03_Plots/.pdf")
-# ggsave("Dist_02.pdf", plot = Dist_2, device = "pdf", path = "./03_Plots/.pdf")
-# ggsave("Dist_03.pdf", plot = Dist_3, device = "pdf", path = "./03_Plots/.pdf")
-# ggsave("Dist_04.pdf", plot = Dist_4, device = "pdf", path = "./03_Plots/.pdf")
 
 # WORKSPACE --------------------------------------------------------------------
 #save.image("Workspace_B")
