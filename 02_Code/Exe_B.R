@@ -21,7 +21,7 @@ shp_arg_2 <- st_read("./01_Data-input/ARG/gadm41_ARG_2.shp")
 shp_bra_2 <- st_read("./01_Data-input/BRA/Brazil_province.shp")
 shp_pry_2 <- st_read("./01_Data-input/PRY/gadm41_PRY_2.shp")
 
-# PREPPING ----------------------------------------------------------------------
+# PREPPING ---------------------------------------------------------------------
 transform_NA <- function(df, except_col) {
   # Iterate through columns
   for (col in names(df)) {
@@ -95,7 +95,7 @@ df <- merge(Municipality[Municipality$NAME_1 %in% Jesuit, ], ds, by = c("COUNTRY
 rm(list = setdiff(ls(), c("df", "ds", "Country", "Region", "Municipality", "Jesuit")))
 
 # VISUALIZATION ----------------------------------------------------------------
-## B.1 -----------------------------------------------------------------------
+## B.1 -------------------------------------------------------------------------
 palette <- c("lightblue", "lightgreen", "yellow", "lightgray")
 
 # plot_00 <- ggplot() +
@@ -212,7 +212,7 @@ plot_04 <- tm_shape(df) +
             legend.text.size = 1)
 
 #REPLICATION -------------------------------------------------------------------
-##B.2 ---------------
+##B.2 --------------------------------------------------------------------------
 
 model_1 <- lm(illiteracy ~ distmiss + lati + longi + corr + ita + mis_pry + mis, data = df)
 model_2 <- lm(illiteracy ~ distmiss + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df)
@@ -229,9 +229,7 @@ df_pry <- subset(df, COUNTRY == "Paraguay")
 model_7 <- lm(illiteracy ~ distmiss + ita, data = df_pry)
 model_8 <- lm(illiteracy ~ distmiss + area + tempe + alti + preci + rugg + river + coast + ita, data = df_pry)
 
-## CONLEY -----------------------------------------------------------------------
-# Multiply the degrees of separation of longitude and latitude by 110575 to get the corresponding linear distances in meters.
-# https://msi.nga.mil/api/publications/download?key=16920949/SFH00000/Calculators/degree.html&type=view
+## CONLEY ----------------------------------------------------------------------
 
 conley_1 <- conleyreg(illiteracy ~ distmiss + lati + longi + corr + ita + mis_pry + mis, data = df,
                       dist_cutoff = 11.0575, lat = "lati", lon = "longi")
@@ -373,12 +371,14 @@ Dist_4 <- ggplot() +
   coord_sf(xlim = c(-59.5, -49.7), ylim = c(-33.5, -25.75))
 
 ## ALTERNATIVE DISTANCE--------------
+
 model_a <- lm(illiteracy ~ distmiss + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df_dist)
 model_b <- lm(illiteracy ~ distmiss_log + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df_dist)
 model_c <- lm(illiteracy ~ distmiss_dec + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df_dist)
 model_d <- lm(illiteracy ~ distmiss_root + lati + longi + area + tempe + alti + preci + rugg + river + coast + corr + ita + mis_pry + mis, data = df_dist)
 
-## STARGAZER --------------------------------------------------------------------
+## STARGAZER -------------------------------------------------------------------
+
 list_1 <- list(model_1, model_2, model_3, model_4, model_5, model_6, model_7, model_8)
 stargazer(list_1, title = "Replication Baseline Table", digits = 4,  type = "latex")
 
@@ -399,4 +399,4 @@ stargazer(model_a, model_b, model_c, model_d, title = "Models with different dis
 # ggsave("Dist_04.png", plot = Dist_4, device = "png", path = "./03_Plots/.png")
 
 # WORKSPACE --------------------------------------------------------------------
-#save.image("Workspace_B")
+# save.image("Workspace_B")
