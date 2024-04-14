@@ -13,5 +13,12 @@ p_load(
   conleyreg,
   janitor,
   estimatr,
-  fixest
+  fixest,
+  spdep,
+  ggthemes,
+  spData,
+  classInt,
+  igraph,
+  RColorBrewer,
+  colorspace
 )
